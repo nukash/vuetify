@@ -15,25 +15,7 @@ This page describes changes introduced in **v4.0.0** and maps the legacy Vuetify
 
 ## Quick Reference
 
-| Legacy Variant (SCSS) | MD3 Variant (JS) | Notes |
-|----------------------|------------------|-----------|-------|
-| `h1` | `display-large` | Largest display text |
-| `h2` | `display-medium` | Medium display text |
-| `h3` | `display-small` | Small display text |
-| `h4` | `headline-large` | Large headline |
-| `h5` | `headline-medium` | Medium headline |
-| `h6` | `headline-small` | Small headline |
-| `subtitle-1` | `body-large` | Primary body text |
-| `subtitle-2` | `label-large` | Emphasized smaller text |
-| `body-1` | `body-large` | Primary body text |
-| `body-2` | `body-medium` | Secondary body text |
-| `button` | `label-large` | Button/action text |
-| `caption` | `body-small` | Smallest body text |
-| `overline` | `label-small` | Small label text |
-
-## Detailed Comparison
-
-> **Note:** The legacy `overline` variant had `text-transform: uppercase`. This is not included in the MD3 `label-small` variant by default. Apply `text-transform: uppercase` manually if needed.
+<DocTypographyPreview />
 
 ## Migration Steps
 
