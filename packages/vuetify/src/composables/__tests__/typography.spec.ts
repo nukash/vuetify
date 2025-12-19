@@ -1,5 +1,5 @@
 // Components
-import { VTypography } from '@/components/VTypography/VTypography'
+import { VTypography } from '@/labs/VTypography/VTypography'
 
 // Utilities
 import { mount } from '@vue/test-utils'

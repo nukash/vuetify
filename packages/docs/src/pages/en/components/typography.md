@@ -1,17 +1,31 @@
 ---
 meta:
   title: Typography
-  description: The VTypography component is used to display text with different styles and sizes.
+  description: The typography component is used to display text with different styles and sizes.
   keywords: typography, text, font, style
 ---
 
 # Typography
 
-The VTypography component is used to display text with different styles and sizes following Material Design guidelines.
+The `v-typography` component is used to display text with different styles and sizes following Material Design guidelines.
+
+## Installation
+
+Labs components require manual import and registration with the Vuetify instance.
+
+```js { resource="src/plugins/vuetify.js" }
+import { VTypography } from 'vuetify/labs/VTypography'
+
+export default createVuetify({
+  components: {
+    VTypography,
+  },
+})
+```
 
 ## Usage
 
-The VTypography component provides a way to display text with different styles and sizes. It supports responsive design and custom colors.
+The `v-typography` component provides a way to display text with different styles and sizes. It supports responsive design and custom colors.
 
 <Example file="typography/usage" />
 
