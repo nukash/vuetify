@@ -1,10 +1,6 @@
 // Composables
 import { createIcons } from './icons'
-import {
-  createDate,
-  DateAdapterSymbol,
-  DateOptionsSymbol,
-} from '@/composables/date/date'
+import { createDate, DateAdapterSymbol, DateOptionsSymbol } from '@/composables/date/date'
 import { createDefaults, DefaultsSymbol } from '@/composables/defaults'
 import { createDisplay, DisplaySymbol } from '@/composables/display'
 import { createGoTo, GoToSymbol } from '@/composables/goto'
@@ -53,7 +49,11 @@ export interface Blueprint extends Omit<VuetifyOptions, 'blueprint'> {}
 export function createVuetify (vuetify: VuetifyOptions = {}) {
   const { blueprint, ...rest } = vuetify
   const options: VuetifyOptions = mergeDeep(blueprint, rest)
-  const { aliases = {}, components = {}, directives = {} } = options
+  const {
+    aliases = {},
+    components = {},
+    directives = {},
+  } = options
 
   const scope = effectScope()
   return scope.run(() => {
@@ -76,14 +76,11 @@ export function createVuetify (vuetify: VuetifyOptions = {}) {
       }
 
       for (const key in aliases) {
-        app.component(
-          key,
-          defineComponent({
-            ...aliases[key],
-            name: key,
-            aliasName: aliases[key].name,
-          }),
-        )
+        app.component(key, defineComponent({
+          ...aliases[key],
+          name: key,
+          aliasName: aliases[key].name,
+        }))
       }
 
       const appScope = effectScope()
@@ -164,15 +161,12 @@ export const version = __VUETIFY_VERSION__
 createVuetify.version = version
 
 // Vue's inject() can only be used in setup
-function inject (
-  this: ComponentPublicInstance,
-  key: InjectionKey<any> | string,
-) {
+function inject (this: ComponentPublicInstance, key: InjectionKey<any> | string) {
   const vm = this.$
 
   const provides = vm.parent?.provides ?? vm.vnode.appContext?.provides
 
   if (provides && (key as any) in provides) {
-    return provides[key as string]
+    return provides[(key as string)]
   }
 }

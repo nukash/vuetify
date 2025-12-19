@@ -29,7 +29,3 @@
     </VTypography>
   </div>
 </template>
-
-<script setup>
-//
-</script>
