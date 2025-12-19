@@ -18,6 +18,7 @@ function genDefaults (keepVariants = true): TypographyOptions {
     merge: true,
     resetStyles: { textTransform: 'none' },
     responsive: true,
+    propertiesForVariables: ['font-size', 'font-weight', 'letter-spacing', 'line-height'],
     variants: keepVariants ? {
       'display-large': { fontSize: '57px', lineHeight: '64px', fontWeight: 400, letterSpacing: '-0.25px' },
       'display-medium': { fontSize: '45px', lineHeight: '52px', fontWeight: 400, letterSpacing: '0px' },
@@ -53,6 +54,7 @@ export interface TypographyOptions {
   merge?: boolean
   resetStyles?: CSSProperties
   responsive?: boolean
+  propertiesForVariables?: string[]
   stylesheetId?: string
   variants?: Record<TypographyVariant, TypographyStyle | null>
   variables?: Record<string, string>
@@ -65,6 +67,7 @@ export interface InternalTypographyOptions {
   merge: boolean
   resetStyles: CSSProperties
   responsive: boolean
+  propertiesForVariables: string[]
   stylesheetId: string
   variants: Record<TypographyVariant, TypographyStyle>
   variables?: Record<string, string>
@@ -73,7 +76,25 @@ export interface InternalTypographyOptions {
 function genTypographyVariables (prefix: string, variables: Record<string, string>): string[] {
   const lines: string[] = []
   for (const [key, value] of Object.entries(variables)) {
-    lines.push(`  --${prefix}typography--${key}:${value};`)
+    lines.push(`  --${prefix}text--${key}:${value};`)
+  }
+  return [':root {', ...lines, '}']
+}
+
+function genVariantVariables (
+  prefix: string,
+  variants: Record<TypographyVariant, TypographyStyle | null>,
+  propertiesForVariables: string[]
+): string[] {
+  const lines: string[] = []
+  const allowedProps = new Set(propertiesForVariables)
+  for (const [variant, style] of Object.entries(variants)) {
+    if (!style) continue
+    for (const [prop, value] of Object.entries(style)) {
+      const cssProperty = toKebabCase(prop)
+      if (!allowedProps.has(cssProperty)) continue
+      lines.push(`  --${prefix}text--${variant}-${cssProperty}:${value};`)
+    }
   }
   return [':root {', ...lines, '}']
 }
@@ -81,7 +102,7 @@ function genTypographyVariables (prefix: string, variables: Record<string, strin
 function stringifyStyle (prefix: string, style: TypographyStyle): string {
   function toValue (val: string) {
     return String(val).startsWith('var:')
-      ? val.replace('var:', `var(--${prefix}typography--`) + ')'
+      ? val.replace('var:', `var(--${prefix}text--`) + ')'
       : val
   }
 
@@ -95,11 +116,13 @@ function genTypographyCss (
   scoped: boolean,
   resetStyles: CSSProperties,
   variants: Record<TypographyVariant, TypographyStyle | null>,
+  propertiesForVariables: string[],
   variables?: Record<string, string>,
   responsive = false,
   thresholds?: DisplayThresholds,
 ): string {
   const content: string[] = []
+  content.push(...genVariantVariables(prefix, variants, propertiesForVariables))
 
   if (variables && Object.keys(variables).length > 0) {
     content.push(...genTypographyVariables(prefix, variables))
@@ -110,7 +133,7 @@ function genTypographyCss (
 
   for (const [variant, style] of Object.entries(variants)) {
     if (!style) continue
-    content.push(`${scopedPrefix}.${variant}{${stringifyStyle(prefix, style)}}`)
+    content.push(`${scopedPrefix}.text-${variant}{${stringifyStyle(prefix, style)}}`)
   }
 
   if (responsive && thresholds) {
@@ -119,15 +142,18 @@ function genTypographyCss (
       content.push(`@media (min-width: ${width}px){`)
       for (const [variant, style] of Object.entries(variants)) {
         if (!style) continue
-        const [name, size] = variant.split(/-(.*)/) // split by first -
-        const responsiveClass = `${name}-${breakpoint}-${size}`
+        const responsiveClass = `text-${breakpoint}-${variant}`
         content.push(`${scopedPrefix}.${responsiveClass}{${stringifyStyle(prefix, style)}}`)
       }
       content.push('}')
     }
   }
 
-  return '@layer vuetify.typography {\n' + content.map(v => `  ${v}`).join('\n') + '\n}'
+  return [
+    '@layer vuetify.typography {',
+    ...content.map(v => `  ${v}`),
+    '}',
+  ].join('\n')
 }
 
 function upsertStyles (id: string, cspNonce: string | undefined, styles: string) {
@@ -164,6 +190,7 @@ export function createTypography (
       parsedOptions.scoped,
       parsedOptions.resetStyles,
       variants.value,
+      parsedOptions.propertiesForVariables,
       parsedOptions.variables,
       parsedOptions.responsive,
       thresholds?.value

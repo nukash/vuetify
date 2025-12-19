@@ -39,7 +39,7 @@ describe('createTypography', () => {
 
     expect(wrapper.text()).toBe('Test text')
     expect(wrapper.classes()).toContain('v-typography')
-    expect(wrapper.classes()).toContain('body-medium')
+    expect(wrapper.classes()).toContain('text-body-medium')
   })
 
   it('should render with a custom variant', () => {
@@ -57,7 +57,7 @@ describe('createTypography', () => {
 
     expect(wrapper.text()).toBe('Custom Style')
     expect(wrapper.classes()).toContain('v-typography')
-    expect(wrapper.classes()).toContain('custom-variant')
+    expect(wrapper.classes()).toContain('text-custom-variant')
   })
 
   it('should apply color class and style', () => {
@@ -115,7 +115,7 @@ describe('createTypography', () => {
 
     expect(wrapper.text()).toBe('Custom Style')
     expect(wrapper.classes()).toContain('v-typography')
-    expect(wrapper.classes()).toContain('body-medium')
+    expect(wrapper.classes()).toContain('text-body-medium')
     expect(wrapper.attributes('style') ?? '').toContain('font-size: 20px')
     expect(wrapper.attributes('style') ?? '').toContain('font-weight: bold')
   })
@@ -132,10 +132,10 @@ describe('createTypography', () => {
     expect(typographyInstance!._css.value).toContain('@layer vuetify.typography')
     expect(typographyInstance!._css.value).toContain(':root {')
     expect(typographyInstance!._css.value).toContain(
-      '--v-typography--body-family:Inter;',
+      '--v-text--body-family:Inter;',
     )
     expect(typographyInstance!._css.value).toContain(
-      '--v-typography--heading-family:"Open Sans", sans-serif;',
+      '--v-text--heading-family:"Open Sans", sans-serif;',
     )
   })
 
@@ -157,7 +157,7 @@ describe('createTypography', () => {
 
     expect(typographyInstance).toBeTruthy()
     expect(typographyInstance!._css.value).toContain(
-      'font-family:var(--v-typography--font-body)',
+      'font-family:var(--v-text--font-body)',
     )
   })
 
@@ -208,8 +208,9 @@ describe('createTypography', () => {
 
     expect(typographyInstance).toBeTruthy()
     expect(typographyInstance!._css.value).toContain(':root {')
-    expect(typographyInstance!._css.value).toContain('--v-typography--body-family:Inter')
+    expect(typographyInstance!._css.value).toContain('--v-text--body-family:Inter')
     expect(typographyInstance!._css.value).toContain('@media (min-width:')
-    expect(typographyInstance!._css.value).toContain('font-family:var(--v-typography--body-family)')
+    expect(typographyInstance!._css.value).toContain('.text-md-body-medium')
+    expect(typographyInstance!._css.value).toContain('font-family:var(--v-text--body-family)')
   })
 })

@@ -50,7 +50,7 @@ export const VTypography = genericComponent()({
 
       if (props.variant) {
         if (isTypographyVariant(props.variant, available)) {
-          classList.push(props.variant)
+          classList.push(`text-${props.variant}`)
         } else {
           consoleWarn(`Unknown typography variant "${props.variant}"`)
         }
@@ -60,10 +60,7 @@ export const VTypography = genericComponent()({
         const responsiveVariant = props[breakpoint]
         if (responsiveVariant) {
           if (isTypographyVariant(responsiveVariant, available)) {
-            const parts = responsiveVariant.split('-')
-            const name = parts[0]
-            const size = parts.slice(1).join('-')
-            classList.push(`${name}-${breakpoint}-${size}`)
+            classList.push(`text-${breakpoint}-${responsiveVariant}`)
           } else {
             consoleWarn(`Unknown typography variant "${responsiveVariant}" for breakpoint "${breakpoint}"`)
           }
