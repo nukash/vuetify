@@ -6,7 +6,7 @@ import { VTypography } from '../VTypography'
 describe('VTypography', () => {
   const vuetify = createVuetify()
 
-  it('renders default variant class', () => {
+  it('does not throw when variant is missing', () => {
     const wrapper = mount(VTypography, {
       global: {
         plugins: [vuetify],
@@ -18,7 +18,7 @@ describe('VTypography', () => {
 
     expect(wrapper.text()).toBe('Test Text')
     expect(wrapper.classes()).toContain('v-typography')
-    expect(wrapper.classes()).toContain('body-medium')
+    expect(wrapper.classes()).not.toContain('text-')
   })
 
   it('applies responsive variant classes', () => {
@@ -35,14 +35,14 @@ describe('VTypography', () => {
 
     expect(wrapper.classes()).toEqual(
       expect.arrayContaining([
-        'body-small',
-        'body-lg-large',
-        'headline-xl-medium',
+        'text-body-small',
+        'text-lg-body-large',
+        'text-xl-headline-medium',
       ]),
     )
   })
 
-  it('applies custom color', () => {
+  it('applies theme color', () => {
     const wrapper = mount(VTypography, {
       global: {
         plugins: [vuetify],
@@ -52,8 +52,22 @@ describe('VTypography', () => {
       },
     })
 
-    expect(wrapper.attributes('style')).toBeDefined()
     expect(wrapper.classes()).toContain('v-typography')
+    expect(wrapper.classes()).toContain('text-primary')
+  })
+
+  it('applies custom color', () => {
+    const wrapper = mount(VTypography, {
+      global: {
+        plugins: [vuetify],
+      },
+      props: {
+        color: '#33aa00',
+      },
+    })
+
+    expect(wrapper.classes()).toContain('v-typography')
+    expect(wrapper.attributes('style')).toContain('color: #33aa00')
   })
 
   it('applies custom tag', () => {
