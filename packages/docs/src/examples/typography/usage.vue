@@ -2,28 +2,28 @@
   <div class="d-flex flex-column gap-4">
     <VTypography
       color="primary"
-      variant="display-large"
+      variant="text-display-large"
     >
       Display Large
     </VTypography>
 
     <VTypography
       color="secondary"
-      variant="headline-large"
+      variant="text-headline-large"
     >
       Headline Large
     </VTypography>
 
     <VTypography
       color="error"
-      variant="body-medium"
+      variant="text-body-medium"
     >
       Body Medium
     </VTypography>
 
     <VTypography
       color="success"
-      variant="label-small"
+      variant="text-label-small"
     >
       Label Small
     </VTypography>

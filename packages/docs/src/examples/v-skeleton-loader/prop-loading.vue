@@ -15,7 +15,7 @@
         cols="12"
         md="6"
       >
-        <div class="text-h5 text-center">
+        <div class="text-headline-medium text-center">
           Using slot
         </div>
 
@@ -36,7 +36,7 @@
         cols="12"
         md="6"
       >
-        <div class="text-h5 text-center">
+        <div class="text-headline-medium text-center">
           Using if
         </div>
 

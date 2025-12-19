@@ -27,7 +27,7 @@
           <v-row dense>
             <v-col cols="12">
               <v-card color="#385F73">
-                <v-card-title class="text-h5">
+                <v-card-title class="text-headline-medium">
                   Unlimited music now
                 </v-card-title>
 
@@ -45,7 +45,7 @@
               <v-card color="#1F7087">
                 <div class="d-flex flex-no-wrap justify-space-between">
                   <div>
-                    <v-card-title class="text-h5">
+                    <v-card-title class="text-headline-medium">
                       Supermodel
                     </v-card-title>
 
@@ -76,7 +76,7 @@
               <v-card color="#952175">
                 <div class="d-flex flex-no-wrap justify-space-between">
                   <div>
-                    <v-card-title class="text-h5">
+                    <v-card-title class="text-headline-medium">
                       Halcyon Days
                     </v-card-title>
 

@@ -25,6 +25,22 @@ This page contains a detailed list of breaking changes and the steps required to
   - `<ul>`, `<ol>` and headings have padding and margins.
 - There are now pre-compiled entry points for the most common style changes. If you have a sass file that only sets `$color-pack: false` or `$utilities: false` you can replace it with `import 'vuetify/styles/core'`. See [Style entry points](/styles/entry-points) for more information.
 
+## Typography
+
+The typography system has been updated from Material Design 2 to Material Design 3. Variant names have changed:
+
+| MD2 (Legacy) | MD3 (New) |
+| - | - |
+| `h1` - `h3` | `display-large`, `display-medium`, `display-small` |
+| `h4` - `h6` | `headline-large`, `headline-medium`, `headline-small` |
+| `subtitle-1`, `body-1` | `body-large` |
+| `body-2` | `body-medium` |
+| `caption` | `body-small` |
+| `button`, `subtitle-2` | `label-large` |
+| `overline` | `label-small` |
+
+For detailed mapping and migration instructions, see [Typography Migration](/getting-started/typography-migration/).
+
 ## Themes
 
 The default theme has been changed from **light** to **system**. This means that the default theme will now be the same as the user's system preference. You can change this by setting the **defaultTheme** theme option:

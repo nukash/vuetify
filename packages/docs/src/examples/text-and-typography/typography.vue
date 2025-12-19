@@ -9,7 +9,7 @@
         {{ sample.name }}
       </v-typography>
 
-      <div class="text-caption mt-4">
+      <div class="text-body-small mt-4">
         variant="{{ sample.variant }}"
       </div>
     </v-card>

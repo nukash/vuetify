@@ -5,7 +5,7 @@
       justify="center"
     >
       <v-col class="text-center">
-        <div class="text-subtitle-2">Offset Top</div>
+        <div class="text-label-large">Offset Top</div>
         {{ offsetTop }}
       </v-col>
     </v-row>

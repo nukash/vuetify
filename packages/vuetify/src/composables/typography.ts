@@ -122,6 +122,7 @@ function genTypographyCss (
   thresholds?: DisplayThresholds,
 ): string {
   const content: string[] = []
+
   content.push(...genVariantVariables(prefix, variants, propertiesForVariables))
 
   if (variables && Object.keys(variables).length > 0) {

@@ -8,7 +8,7 @@
       fill-dot
     >
       <v-card>
-        <v-card-title :class="['text-h6', `bg-${item.color}`]">
+        <v-card-title :class="['text-headline-small', `bg-${item.color}`]">
           Lorem Ipsum Dolor
         </v-card-title>
         <v-card-text class="bg-white text--primary">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-subtitle-2 text-center">
+    <p class="text-label-large text-center">
       Agnostic RTL Alignment
     </p>
 
@@ -11,7 +11,7 @@
       Right aligned text, irrespective of RTL or LTR.
     </p>
 
-    <p class="text-subtitle-2 text-center">
+    <p class="text-label-large text-center">
       Responsive RTL Alignment
     </p>
 

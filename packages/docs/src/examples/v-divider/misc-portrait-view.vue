@@ -5,7 +5,7 @@
   >
     <v-card-item class="bg-cyan-darken-1">
       <v-card-title>
-        <span class="text-h5">Sarah Mcbeal</span>
+        <span class="text-headline-medium">Sarah Mcbeal</span>
       </v-card-title>
 
       <template v-slot:append>
