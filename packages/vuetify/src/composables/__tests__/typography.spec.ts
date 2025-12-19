@@ -96,14 +96,14 @@ describe('createTypography', () => {
     expect(wrapper.text()).toBe('Heading')
   })
 
-  it('should apply customVariant styles inline', () => {
+  it('should apply custom styles inline', () => {
     const wrapper = mount(VTypography, {
       global: {
         plugins: [vuetify],
       },
       props: {
         variant: 'body-medium',
-        customVariant: {
+        style: {
           fontSize: '20px',
           fontWeight: 'bold',
         },
@@ -116,8 +116,8 @@ describe('createTypography', () => {
     expect(wrapper.text()).toBe('Custom Style')
     expect(wrapper.classes()).toContain('v-typography')
     expect(wrapper.classes()).toContain('body-medium')
-    expect(wrapper.attributes('style')).toContain('font-size: 20px')
-    expect(wrapper.attributes('style')).toContain('font-weight: bold')
+    expect(wrapper.attributes('style') ?? '').toContain('font-size: 20px')
+    expect(wrapper.attributes('style') ?? '').toContain('font-weight: bold')
   })
 
   it('should generate CSS variables for typography variables', () => {

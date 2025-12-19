@@ -87,7 +87,7 @@ describe('VTypography', () => {
     const wrapper = mount(VTypography, {
       global: { plugins: [vuetify] },
       props: {
-        customVariant: { fontSize: '32px', fontWeight: '700' },
+        style: { fontSize: '32px', fontWeight: '700' },
       },
       slots: {
         default: 'Custom style',

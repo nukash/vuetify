@@ -11,10 +11,7 @@ import { computed } from 'vue'
 import { consoleWarn, genericComponent, propsFactory, useRender } from '@/util'
 
 // Types
-import type { PropType } from 'vue'
 import type { TypographyStyle, TypographyVariant } from '@/composables/typography'
-
-const DEFAULT_VARIANT: TypographyVariant = 'body-medium'
 
 function isTypographyVariant (
   value: string,
@@ -24,19 +21,12 @@ function isTypographyVariant (
 }
 
 export const makeVTypographyProps = propsFactory({
-  variant: {
-    type: String,
-    default: DEFAULT_VARIANT,
-  },
+  variant: String,
   sm: String,
   md: String,
   lg: String,
   xl: String,
   xxl: String,
-  customVariant: {
-    type: Object as PropType<Partial<CSSStyleDeclaration>>,
-    default: undefined,
-  },
   color: String,
 
   ...makeComponentProps(),
@@ -58,12 +48,12 @@ export const VTypography = genericComponent()({
       const classList: string[] = ['v-typography']
       const available = typography.variants.value
 
-      const baseVariant = props.variant || DEFAULT_VARIANT
-      if (isTypographyVariant(baseVariant, available)) {
-        classList.push(baseVariant)
-      } else {
-        consoleWarn(`Unknown typography variant "${baseVariant}"`)
-        classList.push(DEFAULT_VARIANT)
+      if (props.variant) {
+        if (isTypographyVariant(props.variant, available)) {
+          classList.push(props.variant)
+        } else {
+          consoleWarn(`Unknown typography variant "${props.variant}"`)
+        }
       }
 
       for (const breakpoint of breakpoints) {
@@ -83,18 +73,6 @@ export const VTypography = genericComponent()({
       return classList
     })
 
-    const currentStyle = computed(() => {
-      return {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        wordBreak: 'break-word',
-        overflowWrap: 'break-word',
-        maxWidth: '100%',
-        width: '100%',
-        ...props.customVariant,
-      }
-    })
-
     useRender(() => (
       <props.tag
         class={[
@@ -104,7 +82,6 @@ export const VTypography = genericComponent()({
           props.class,
         ]}
         style={[
-          currentStyle.value,
           textColorStyles.value,
           props.style,
         ]}
