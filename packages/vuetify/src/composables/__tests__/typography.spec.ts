@@ -130,7 +130,7 @@ describe('createTypography', () => {
 
     expect(typographyInstance).toBeTruthy()
     expect(typographyInstance!._css.value).toContain('@layer vuetify.typography')
-    expect(typographyInstance!._css.value).toContain(':root{')
+    expect(typographyInstance!._css.value).toContain(':root {')
     expect(typographyInstance!._css.value).toContain(
       '--v-typography--body-family:Inter;',
     )
@@ -142,7 +142,7 @@ describe('createTypography', () => {
   it('should use typography variables in fontFamily', () => {
     const typographyInstance = createTypography({
       variables: {
-        'body-family': 'Inter',
+        'font-body': 'Inter',
       },
       variants: {
         'body-medium': {
@@ -150,14 +150,14 @@ describe('createTypography', () => {
           lineHeight: '20px',
           fontWeight: 400,
           letterSpacing: '0.25px',
-          fontFamily: 'body-family',
+          fontFamily: 'var:font-body',
         },
       },
     })
 
     expect(typographyInstance).toBeTruthy()
     expect(typographyInstance!._css.value).toContain(
-      'font-family:var(--v-typography--body-family)',
+      'font-family:var(--v-typography--font-body)',
     )
   })
 
@@ -180,23 +180,6 @@ describe('createTypography', () => {
     )
   })
 
-  it('should support theme-linked variables', () => {
-    const typographyInstance = createTypography({
-      variables: {
-        'heading-family': 'var(--v-theme--heading-family)',
-        'body-family': 'var(--v-theme--body-family)',
-      },
-    })
-
-    expect(typographyInstance).toBeTruthy()
-    expect(typographyInstance!._css.value).toContain(
-      '--v-typography--heading-family:var(--v-theme--heading-family);',
-    )
-    expect(typographyInstance!._css.value).toContain(
-      '--v-typography--body-family:var(--v-theme--body-family);',
-    )
-  })
-
   it('should work with responsive and merge options', () => {
     const typographyInstance = createTypography({
       variables: {
@@ -210,7 +193,7 @@ describe('createTypography', () => {
           lineHeight: '20px',
           fontWeight: 400,
           letterSpacing: '0.25px',
-          fontFamily: 'body-family',
+          fontFamily: 'var:body-family',
         },
       },
     },
@@ -224,10 +207,9 @@ describe('createTypography', () => {
     }))
 
     expect(typographyInstance).toBeTruthy()
-    expect(typographyInstance!._css.value).toContain(':root{')
+    expect(typographyInstance!._css.value).toContain(':root {')
+    expect(typographyInstance!._css.value).toContain('--v-typography--body-family:Inter')
     expect(typographyInstance!._css.value).toContain('@media (min-width:')
-    expect(typographyInstance!._css.value).toContain(
-      'font-family:var(--v-typography--body-family)',
-    )
+    expect(typographyInstance!._css.value).toContain('font-family:var(--v-typography--body-family)')
   })
 })

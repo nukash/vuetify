@@ -70,32 +70,23 @@ export interface InternalTypographyOptions {
   variables?: Record<string, string>
 }
 
-function genTypographyVariables (variables: Record<string, string>): string {
-  const lines: string[] = [':root{']
+function genTypographyVariables (prefix: string, variables: Record<string, string>): string[] {
+  const lines: string[] = []
   for (const [key, value] of Object.entries(variables)) {
-    lines.push(`--v-typography--${key}:${value};`)
+    lines.push(`  --${prefix}typography--${key}:${value};`)
   }
-  lines.push('}')
-  return lines.join('')
+  return [':root {', ...lines, '}']
 }
 
-function stringifyStyle (style: TypographyStyle, variables?: Record<string, string>): string {
+function stringifyStyle (prefix: string, style: TypographyStyle): string {
+  function toValue (val: string) {
+    return String(val).startsWith('var:')
+      ? val.replace('var:', `var(--${prefix}typography--`) + ')'
+      : val
+  }
+
   return Object.entries(style)
-    .map(([key, val]) => {
-      const cssKey = toKebabCase(key)
-      let cssValue = String(val)
-
-      if (key === 'fontFamily' && variables) {
-        if (cssValue.startsWith('var(')) {
-          return `${cssKey}:${cssValue}`
-        }
-        if (variables[cssValue]) {
-          cssValue = `var(--v-typography--${cssValue})`
-        }
-      }
-
-      return `${cssKey}:${cssValue}`
-    })
+    .map(([key, val]) => `${toKebabCase(key)}:${toValue(val)}`)
     .join('; ')
 }
 
@@ -111,7 +102,7 @@ function genTypographyCss (
   const content: string[] = []
 
   if (variables && Object.keys(variables).length > 0) {
-    content.push(genTypographyVariables(variables))
+    content.push(...genTypographyVariables(prefix, variables))
   }
 
   content.push(`.${prefix}typography{${stringifyStyle(prefix, resetStyles)}}`)
@@ -119,7 +110,7 @@ function genTypographyCss (
 
   for (const [variant, style] of Object.entries(variants)) {
     if (!style) continue
-    content.push(`${scopedPrefix}.${variant}{${stringifyStyle(style, variables)}}`)
+    content.push(`${scopedPrefix}.${variant}{${stringifyStyle(prefix, style)}}`)
   }
 
   if (responsive && thresholds) {
@@ -130,7 +121,7 @@ function genTypographyCss (
         if (!style) continue
         const [name, size] = variant.split(/-(.*)/) // split by first -
         const responsiveClass = `${name}-${breakpoint}-${size}`
-        content.push(`${scopedPrefix}.${responsiveClass}{${stringifyStyle(style, variables)}}`)
+        content.push(`${scopedPrefix}.${responsiveClass}{${stringifyStyle(prefix, style)}}`)
       }
       content.push('}')
     }
