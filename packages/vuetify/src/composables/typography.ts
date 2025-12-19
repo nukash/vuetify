@@ -1,4 +1,3 @@
-// composables/typography.ts
 // Utilities
 import { computed, inject, ref, watchEffect } from 'vue'
 import { getOrCreateStyleElement, mergeDeep, toKebabCase } from '@/util'
