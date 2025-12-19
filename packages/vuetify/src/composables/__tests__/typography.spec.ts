@@ -3,10 +3,11 @@ import { VTypography } from '@/components/VTypography/VTypography'
 
 // Utilities
 import { mount } from '@vue/test-utils'
+import { ref } from 'vue'
 import { createTypography } from '../typography'
 import { createVuetify } from '@/framework'
 
-describe('VTypography', () => {
+describe('createTypography', () => {
   const vuetify = createVuetify({
     blueprint: {
       defaults: {},
@@ -128,12 +129,12 @@ describe('VTypography', () => {
     })
 
     expect(typographyInstance).toBeTruthy()
-    expect(typographyInstance!.css.value).toContain('@layer vuetify.typography')
-    expect(typographyInstance!.css.value).toContain(':root{')
-    expect(typographyInstance!.css.value).toContain(
+    expect(typographyInstance!._css.value).toContain('@layer vuetify.typography')
+    expect(typographyInstance!._css.value).toContain(':root{')
+    expect(typographyInstance!._css.value).toContain(
       '--v-typography--body-family:Inter;',
     )
-    expect(typographyInstance!.css.value).toContain(
+    expect(typographyInstance!._css.value).toContain(
       '--v-typography--heading-family:"Open Sans", sans-serif;',
     )
   })
@@ -155,7 +156,7 @@ describe('VTypography', () => {
     })
 
     expect(typographyInstance).toBeTruthy()
-    expect(typographyInstance!.css.value).toContain(
+    expect(typographyInstance!._css.value).toContain(
       'font-family:var(--v-typography--body-family)',
     )
   })
@@ -174,7 +175,7 @@ describe('VTypography', () => {
     })
 
     expect(typographyInstance).toBeTruthy()
-    expect(typographyInstance!.css.value).toContain(
+    expect(typographyInstance!._css.value).toContain(
       'font-family:var(--my-custom-font)',
     )
   })
@@ -188,10 +189,10 @@ describe('VTypography', () => {
     })
 
     expect(typographyInstance).toBeTruthy()
-    expect(typographyInstance!.css.value).toContain(
+    expect(typographyInstance!._css.value).toContain(
       '--v-typography--heading-family:var(--v-theme--heading-family);',
     )
-    expect(typographyInstance!.css.value).toContain(
+    expect(typographyInstance!._css.value).toContain(
       '--v-typography--body-family:var(--v-theme--body-family);',
     )
   })
@@ -212,12 +213,20 @@ describe('VTypography', () => {
           fontFamily: 'body-family',
         },
       },
-    })
+    },
+    ref({
+      xs: 0,
+      sm: 600,
+      md: 840,
+      lg: 1145,
+      xl: 1545,
+      xxl: 2138,
+    }))
 
     expect(typographyInstance).toBeTruthy()
-    expect(typographyInstance!.css.value).toContain(':root{')
-    expect(typographyInstance!.css.value).toContain('@media (min-width:')
-    expect(typographyInstance!.css.value).toContain(
+    expect(typographyInstance!._css.value).toContain(':root{')
+    expect(typographyInstance!._css.value).toContain('@media (min-width:')
+    expect(typographyInstance!._css.value).toContain(
       'font-family:var(--v-typography--body-family)',
     )
   })

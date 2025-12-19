@@ -14,7 +14,7 @@ import { createTheme, ThemeSymbol } from '@/composables/theme'
 import { createTypography, TypographySymbol } from '@/composables/typography'
 
 // Utilities
-import { effectScope, nextTick, reactive } from 'vue'
+import { effectScope, nextTick, reactive, readonly } from 'vue'
 import { defineComponent, IN_BROWSER, mergeDeep } from '@/util'
 
 // Types
@@ -64,7 +64,7 @@ export function createVuetify (vuetify: VuetifyOptions = {}) {
     const locale = createLocale(options.locale)
     const date = createDate(options.date, locale)
     const goTo = createGoTo(options.goTo, locale)
-    const typography = createTypography(options.typography ?? undefined)
+    const typography = createTypography(options.typography, readonly(display.thresholds))
 
     function install (app: App) {
       for (const key in directives) {

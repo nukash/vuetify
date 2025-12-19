@@ -1,12 +1,10 @@
 // Composables
 import { useTextColor } from '@/composables/color'
 import { makeComponentProps } from '@/composables/component'
+import { breakpoints } from '@/composables/display'
 import { makeTagProps } from '@/composables/tag'
 import { makeThemeProps, provideTheme } from '@/composables/theme'
-import {
-  TYPOGRAPHY_BREAKPOINTS,
-  useTypography,
-} from '@/composables/typography'
+import { useTypography } from '@/composables/typography'
 
 // Utilities
 import { computed } from 'vue'
@@ -58,7 +56,7 @@ export const VTypography = genericComponent()({
 
     const classes = computed(() => {
       const classList: string[] = ['v-typography']
-      const available = typography.styles.value
+      const available = typography.variants.value
 
       const baseVariant = props.variant || DEFAULT_VARIANT
       if (isTypographyVariant(baseVariant, available)) {
@@ -68,7 +66,7 @@ export const VTypography = genericComponent()({
         classList.push(DEFAULT_VARIANT)
       }
 
-      for (const breakpoint of TYPOGRAPHY_BREAKPOINTS) {
+      for (const breakpoint of breakpoints) {
         const responsiveVariant = props[breakpoint]
         if (responsiveVariant) {
           if (isTypographyVariant(responsiveVariant, available)) {
